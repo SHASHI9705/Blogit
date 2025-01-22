@@ -21,10 +21,22 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 
-router.get("/add-new", (req, res) => {
-    return res.render("addBlog", {
-        user: req.user,
-    });
+router.get("/add-new", async (req, res) => {
+    try {
+
+        let creator = null;
+        if (req.user) {
+            creator = await User.findById(req.user._id);
+        }
+
+        res.render("addBlog", {
+            user: req.user,
+            creator,
+        });
+    } catch (error) {
+        console.error("Error fetching blogs:", error.message);
+        res.status(500).send("Server Error");
+    };
 });
 
 

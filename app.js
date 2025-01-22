@@ -49,7 +49,7 @@ app.get("/", async (req, res) => {
         res.status(500).send("Server Error");
     }
 });
-
+ 
 
 app.use("/user", userRoute);
 app.use("/blog", blogRoute);
