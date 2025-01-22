@@ -40,7 +40,7 @@ app.get("/", async (req, res) => {
         }
 
         res.render("home", {
-            user: req.user || null,
+            user: req.user,
             blogs: allBlogs,
             creator,
         });
