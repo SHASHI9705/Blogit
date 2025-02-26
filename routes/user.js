@@ -24,7 +24,8 @@ router.post("/signin", async (req, res) => {
     };
 });
 
-router.get("/logout",(req,res) => {
+router.get("/logout", (req, res) => {
+    res.clearCookie("token");
     res.redirect("/");
 });
 
@@ -39,4 +40,3 @@ router.post("/signup", async (req, res) => {
 });
 
 module.exports = router;
-

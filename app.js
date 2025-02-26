@@ -14,7 +14,6 @@ const blogRoute = require("./routes/blog");
 const { checkForAuthenticationCookie } = require("./middlewares/authentication");
 const { localsName } = require("ejs");
 
-
 const app = express();
 const PORT = process.env.PORT || 9009;
 
@@ -29,7 +28,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(checkForAuthenticationCookie("token"));
 app.use(express.static(path.resolve("./public")));
- 
+
 app.get("/", async (req, res) => {
     try {
         const allBlogs = await Blog.find({}).populate("createdBy");
@@ -49,7 +48,6 @@ app.get("/", async (req, res) => {
         res.status(500).send("Server Error");
     }
 });
- 
 
 app.use("/user", userRoute);
 app.use("/blog", blogRoute);

@@ -18,7 +18,7 @@ const userSchema = new Schema({
     },
     password: {
         type: String,
-        rquired: true,
+        required: true,
     },
     profileImageURL: {
         type: String,
@@ -43,7 +43,6 @@ userSchema.pre("save", function (next) {
     this.password = hashPassword;
 
     next();
-
 });
 
 userSchema.static("matchPasswordAndGenerateToken", async function (email, password) {
@@ -55,10 +54,9 @@ userSchema.static("matchPasswordAndGenerateToken", async function (email, passwo
 
     const userProvideHash = createHmac("sha256", salt).update(password).digest("hex");
     if(hashedPassword !== userProvideHash )throw new Error('Incorrect Password');
-    
+
     const token = createTokenForUser(user);
     return token;
-
 });
 
 const User = model('user', userSchema);
