@@ -3,6 +3,82 @@
 <head>
     <%- include("./partials/head") %>
     <title>Home Page</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            padding: 20px;
+        }
+        .card {
+            background-color: #1e1e1e;
+            border: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 10px;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        .card-img-top {
+            border-radius: 10px 10px 0 0;
+        }
+        .card-title {
+            color: #ffffff;
+        }
+        .btn-primary {
+            background-color: #6200ea;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #3700b3;
+        }
+        .card-body p {
+            color: #b0b0b0;
+        }
+        .row-cols-4 {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .col {
+            width: calc(25% - 1rem);
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .navbar-brand .emoji-circle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #fff;
+            margin-right: 10px;
+        }
+        .navbar-nav {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+        }
+        .nav-link {
+            color: #e0e0e0;
+            margin-right: 15px;
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #ffffff;
+        }
+    </style>
 </head>
 <body>
     <%- include("./partials/nav") %>
@@ -10,16 +86,20 @@
         <div class="row row-cols-4">
             <% blogs.forEach(blog => { %>
                 <div class="col">
-                    <div class="card col" style="width: 18rem; margin-bottom: 1rem;">
+                    <div class="card">
                         <img src="<%= blog.coverImageURL %>" class="card-img-top" style="height: 9rem;">
                         <div class="card-body">
                             <h5 class="card-title"><%= blog.title %></h5>
                             <a href="/blog/<%= blog._id %>" class="btn btn-primary">View</a>
-                            <p>Created By: <%= blog.createdBy ? blog.createdBy.fullName : 'Unknown' %></p> <!-- Updated line -->
+                            <p>Created By: <%= blog.createdBy ? blog.createdBy.fullName : 'Unknown' %></p>
                         </div>
                     </div>
                 </div>
             <% }) %>
+            <!-- Placeholder columns to preserve layout even with fewer blogs -->
+            <% for (let i = blogs.length; i < 4; i++) { %>
+                <div class="col"></div>
+            <% } %>
         </div>
     </div>
     <%- include("./partials/scripts") %>

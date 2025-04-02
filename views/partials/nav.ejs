@@ -1,6 +1,9 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary" "bg-dark" data-bs-theme="dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Blogit</a>
+        <a class="navbar-brand" href="#">
+            <div class="emoji-circle">📚</div>
+            Blogit!!
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -23,20 +26,18 @@
                             <li><a class="dropdown-item" href="/user/logout">Logout</a></li>
                         </ul>
                     </li>
-                    <% } else {%>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/user/signup">Create Account</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/user/signin">Signin</a>
-                        </li>
-                        <% } %>
+                <% } else { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/signup">Create Account</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/signin">Signin</a>
+                    </li>
+                <% } %>
             </ul>
         </div>
     </div>
 </nav>
-
-
 
 <% if (locals.error) { %>
     <div class="container mt-4">
@@ -44,4 +45,27 @@
             <%= locals.error %>
         </div>
     </div>
-    <% } %>
+<% } %>
+
+<style>
+    .navbar-brand .emoji-circle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: #fff;
+        margin-right: 10px;
+    }
+    .navbar-nav .nav-link {
+        position: relative;
+        padding: 0.5rem 1rem;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        border: 2px solid transparent;
+    }
+    .navbar-nav .nav-link:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        box-shadow: inset 0 0 0 2px #fff;
+    }
+</style>
