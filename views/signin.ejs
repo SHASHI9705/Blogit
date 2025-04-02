@@ -3,32 +3,150 @@
 
 <head>
     <%- include("./partials/head") %>
-        <title>Signin</title>
+    <title>Signin</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        .navbar {
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .form-container {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+            width: 100%;
+            max-width: 400px;
+            margin-top: 80px;
+        }
+
+        h2 {
+            background-color: #24a745;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .form-label {
+            color: #ffffff;
+        }
+
+        .form-control {
+            background-color: #2c2c2c;
+            color: #e0e0e0;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .form-control:focus {
+            background-color: #2c2c2c;
+            color: #e0e0e0;
+            border: 1px solid #03a9f4;
+            box-shadow: none;
+        }
+
+        .form-text {
+            color: #e0e0e0;
+        }
+
+        .btn-primary {
+            background-color: #03a9f4;
+            border: none;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background-color: #0288d1;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #1e1e1e;
+            color: #b0b0b0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 2rem;
+            font-size: 0.9rem;
+            border-top: 1px solid #333;
+        }
+
+        .footer .left {
+            font-weight: bold;
+        }
+
+        .footer .right a {
+            color: #b0b0b0;
+            margin-left: 15px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer .right a:hover {
+            color: #ffffff;
+        }
+
+        .navbar-nav {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+    </style>
 </head>
 
 <body>
     <%- include("./partials/nav") %>
 
-        <div class="container mt-4">
-            <form action="/user/signin" method="post">
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                        name="email">
-                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-                </div>
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" name="password">
-                </div>
+    <div class="form-container">
+        <h2>Signin</h2>
+        <form action="/user/signin" method="post">
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" required>
+                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
 
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+    <div class="footer">
+        <div class="left">Developed by: Shashiranjan Singh</div>
+        <div class="right">
+            <a href="/privacy">Privacy</a>
+            <a href="/security">Security</a>
+            <a href="/cookies">Cookies</a>
         </div>
+    </div>
 
-        <%- include("./partials/scripts") %>
-
+    <%- include("./partials/scripts") %>
 </body>
-
 
 </html>

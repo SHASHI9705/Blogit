@@ -2,8 +2,9 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
             <div class="emoji-circle">📚</div>
-            Blogit!!
+            
         </a>
+        <p style="font-size: 26px;margin-top: auto;margin-bottom: auto;">Blogit!!</p>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -14,9 +15,6 @@
                     <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
                 <% if (locals.user) { %>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/blog/add-new">Add Blog</a>
-                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -26,6 +24,10 @@
                             <li><a class="dropdown-item" href="/user/logout">Logout</a></li>
                         </ul>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog/add-new">Add Blog</a>
+                    </li>
+                    
                 <% } else { %>
                     <li class="nav-item">
                         <a class="nav-link" href="/user/signup">Create Account</a>

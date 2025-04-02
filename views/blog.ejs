@@ -1,46 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <%- include("./partials/head") %>
-        <title>Blog</title>
-    </head>
-    <body>
-        <%- include("./partials/nav") %>
+<head>
+    <%- include("./partials/head") %>
+    <title>Blog</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            padding: 20px;
+            text-align: center; /* Center the content */
+        }
+        .title-box {
+            display: inline-block;
+            border: 2px solid #4e54c8; /* Glowing border */
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px 2px rgba(78, 84, 200, 0.6); /* Glowing effect */
+            background-color: #1e1e1e;
+        }
+        .title-box h1 {
+            margin: 0;
+            font-size: 2.8rem; /* Increased font size */
+            font-weight: bold;
+            color: #ffffff;
+        }
+        img {
+            display: block;
+            margin: 0 auto;
+            border-radius: 10px;
+        }
+        .blog-body {
+            background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+            padding: 20px;
+            border-radius: 10px;
+            max-height: 400px; /* Adjust based on your preference */
+            overflow-y: auto; /* Enable vertical scrolling */
+            overflow-x: hidden; /* Disable horizontal scrolling */
+            margin-top: 20px;
+            text-align: left; /* Align text to the left */
+            backdrop-filter: blur(10px); /* Apply blur effect */
+            -webkit-backdrop-filter: blur(10px); /* Apply blur effect for Safari */
+            border: 2px solid #4e54c8; /* Glowing border */
+            box-shadow: 0 0 10px 2px rgba(78, 84, 200, 0.6); /* Glowing effect */
+        }
+        .blog-body pre {
+            background-color: transparent; /* Make pre background transparent */
+            color: #e0e0e0;
+            padding: 10px;
+            border-radius: 5px;
+            white-space: pre-wrap; /* Wrap text inside the pre tag */
+            word-wrap: break-word; /* Break long words to fit inside the container */
+            font-size: 1.1rem; /* Increased font size */
+            font-style: italic; /* Italic font style for blog body */
+            font-weight: bold;
+        }
+        .comment-section {
+            margin-top: 30px;
+            text-align: left; /* Align comments to the left */
+        }
+        .comment-section h1 {
+            margin-bottom: 20px;
+        }
+        .comment {
+            margin-bottom: 10px;
+            background-color: transparent;
+            padding: 5px;
+            border: 1px solid #ffffff; /* Thin white border */
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+        }
+        .comment img {
+            border-radius: 50%;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        .comment pre {
+            margin: 0;
+            white-space: pre-wrap; /* Wrap text inside the pre tag */
+            word-wrap: break-word; /* Break long words to fit inside the container */
+            font-size: 1.1rem; /* Increased font size */
+            font-weight: bold;
+            flex: 1; /* Allow the comment text to take up remaining space */
+        }
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #1e1e1e;
+            color: #b0b0b0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 2rem;
+            font-size: 0.9rem;
+            border-top: 1px solid #333;
+        }
+        .footer .left {
+            font-weight: bold;
+        }
+        .footer .right a {
+            color: #b0b0b0;
+            margin-left: 15px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .footer .right a:hover {
+            color: #ffffff;
+        }
+        .navbar-nav {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+    </style>
+</head>
+<body>
+    <%- include("./partials/nav") %>
 
-        <div class="container mt-4">
+    <div class="container mt-4">
+        <div class="title-box">
             <h1><%= blog.title %></h1>
-            <img src="<%= blog.coverImageURL %>"width="700px" height="394px" >
-            <pre class="mt-3"><%= blog.body %></pre>
         </div>
-        <div class="container mt-4">
-            <img src="<%= blog.createdBy.profileImageURL %>" width="50px"> <%= blog.createdBy.fullName %>
+        <img src="<%= blog.coverImageURL %>" width="700px" height="394px">
+        <div class="blog-body">
+            <pre><%= blog.body %></pre>
         </div>
+    </div>
+    <div class="container mt-4">
+        <img src="<%= blog.createdBy.profileImageURL %>" width="50px"> <%= blog.createdBy.fullName %>
+    </div>
 
-        <div class="container mt-3">
-            <h1>Comments (<%= comments.length %>)</h1>
-            <% if (locals.user) { %>
-                <form action="/blog/comment/<%= blog._id %>" method="post">
-                    <div class="mb-3">
-                        <input type="text" class="form-control" name="content" placeholder="Enter Your Comment">
-                        <button type="submit" class="btn btn-sm btn-primary">Add</button>
-                    </div>
-                </form>
-                
-            <% } %>
-            <div class="mt-3">
-                <% comments.forEach(comment => { %>
-                    <div>
-                        <img src="<%= comment.createdBy.profileImageURL %>" width="50px"> 
-                        <%= comment.createdBy.fullName %> 
-                        <pre><%= comment.content %></pre>
-                    </div>
-                 
-                <% }) %>
-            </div>
-         
+    <div class="container mt-3 comment-section">
+        <h1>Comments (<%= comments.length %>)</h1>
+        <% if (locals.user) { %>
+            <form action="/blog/comment/<%= blog._id %>" method="post">
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="content" placeholder="Enter Your Comment">
+                    <button type="submit" class="btn btn-sm btn-primary">Add</button>
+                </div>
+            </form>
+        <% } %>
+        <div class="mt-3">
+            <% comments.forEach(comment => { %>
+                <div class="comment">
+                    <img src="<%= comment.createdBy.profileImageURL %>" width="50px"> 
+                    <pre><%= comment.content %></pre>
+                </div>
+            <% }) %>
         </div>
+    </div>
 
+    <div class="footer">
+        <div class="left">Developed by: Shashiranjan Singh</div>
+        <div class="right">
+            <a href="/privacy">Privacy</a>
+            <a href="/security">Security</a>
+            <a href="/cookies">Cookies</a>
+        </div>
+    </div>
 
-        <%- include("./partials/scripts") %>
-    </body>
+    <%- include("./partials/scripts") %>
+</body>
 </html>
