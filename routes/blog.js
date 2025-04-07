@@ -54,6 +54,30 @@ router.get("/:id", async (req, res) => {
     }
 });
 
+// Delete blog route
+router.delete("/:id", async (req, res) => {
+    if (!req.user) {
+        return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+
+    try {
+        const blog = await Blog.findById(req.params.id);
+        if (!blog) {
+            return res.status(404).json({ success: false, message: "Blog not found" });
+        }
+
+        if (blog.createdBy.toString() !== req.user._id.toString()) {
+            return res.status(403).json({ success: false, message: "Forbidden" });
+        }
+
+        await Blog.findByIdAndDelete(req.params.id);
+        return res.json({ success: true, message: "Blog deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting blog:", error.message);
+        return res.status(500).json({ success: false, message: "Server Error" });
+    }
+});
+
 router.post("/comment/:blogId", async (req, res) => {
     if (!req.user) {
         return res.status(401).send("Unauthorized");

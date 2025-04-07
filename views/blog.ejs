@@ -23,12 +23,30 @@
             margin-bottom: 20px;
             box-shadow: 0 0 10px 2px rgba(78, 84, 200, 0.6); 
             background-color: #1e1e1e;
+            position: relative; /* Added for positioning the delete button */
         }
         .title-box h1 {
             margin: 0;
             font-size: 2.8rem; 
             font-weight: bold;
             color: #ffffff;
+            display: inline-block;
+        }
+        .delete-button {
+            position: absolute;
+            top: 50%;
+            right: -8rem; /* Adjusted for more space from title box */
+            transform: translateY(-50%);
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .delete-button:hover {
+            background-color: #d32f2f;
         }
         img {
             display: block;
@@ -130,6 +148,9 @@
     <div class="container mt-4">
         <div class="title-box">
             <h1><%= blog.title %></h1>
+            <% if (locals.user && locals.user._id.toString() === blog.createdBy._id.toString()) { %>
+                <button class="delete-button" onclick="deleteBlog('<%= blog._id %>')">Delete</button>
+            <% } %>
         </div>
         <img src="<%= blog.coverImageURL %>" width="700px" height="394px">
         <div class="blog-body">
@@ -168,6 +189,31 @@
             <a href="/cookies">Cookies</a>
         </div>
     </div>
+
+    <script>
+        function deleteBlog(blogId) {
+            if (confirm("Are you sure you want to delete this blog?")) {
+                fetch(`/blog/${blogId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = "/";
+                    } else {
+                        alert("Error deleting blog");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("Error deleting blog");
+                });
+            }
+        }
+    </script>
 
     <%- include("./partials/scripts") %>
 </body>

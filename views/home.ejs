@@ -118,11 +118,25 @@
         .footer .right a:hover {
             color: #ffffff;
         }
+        .page-heading {
+            font-size: 24px;
+            color: #fff;
+            margin-bottom: 5rem;
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic; /* Italic font style */
+            font-weight: 300; /* Thin font weight */
+            border: 1px solid rgba(255, 255, 255, 0.5); /* Thin white border */
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Thin white glowing effect */
+            padding: 10px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
     <%- include("./partials/nav") %>
     <div class="container mt-3">
+        <h2 class="page-heading">Have something in your mind related to cloud? Just blog it now!</h2>
         <div class="row row-cols-4">
             <% blogs.forEach(blog => { %>
                 <div class="col">

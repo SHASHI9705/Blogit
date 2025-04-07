@@ -1,10 +1,9 @@
-<nav class="navbar navbar-expand-lg " style="background-color: rgba(25, 25, 25, 0.626);border-bottom: 1px solid rgba(255, 255, 255, 0.215);">
+<nav class="navbar navbar-expand-lg" style="background-color: rgba(25, 25, 25, 0.626);border-bottom: 1px solid rgba(255, 255, 255, 0.215);">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <div class="emoji-circle">📚</div>
-            
+        <a class="navbar-brand d-flex align-items-center" href="#">
+            <div class="emoji-circle">☁️</div>
+            <p style="font-size: 26px; margin-top: auto; margin-bottom: auto; color: white;">Blogit!!</p>
         </a>
-        <p style="font-size: 26px;margin-top: auto;margin-bottom: auto;">Blogit!!</p>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -27,7 +26,6 @@
                     <li class="nav-item">
                         <a style="color: white;" class="nav-link" href="/blog/add-new">Add Blog</a>
                     </li>
-                    
                 <% } else { %>
                     <li class="nav-item">
                         <a style="color: white;" class="nav-link" href="/user/signup">Create Account</a>
@@ -59,13 +57,26 @@
         border-radius: 50%;
         background-color: #fff;
         margin-right: 10px;
+        box-shadow: 0 0 10px 2px rgba(0, 123, 255, 0.8); /* Blue glowing effect */
+        animation: glow 1.5s infinite alternate;
     }
+
+    @keyframes glow {
+        from {
+            box-shadow: 0 0 10px 2px rgba(0, 123, 255, 0.8);
+        }
+        to {
+            box-shadow: 0 0 20px 4px rgba(0, 123, 255, 1);
+        }
+    }
+
     .navbar-nav .nav-link {
         position: relative;
         padding: 0.5rem 1rem;
         transition: background-color 0.3s ease, box-shadow 0.3s ease;
         border: 2px solid transparent;
     }
+
     .navbar-nav .nav-link:hover {
         background-color: rgba(255, 255, 255, 0.1);
         box-shadow: inset 0 0 0 2px #fff;
