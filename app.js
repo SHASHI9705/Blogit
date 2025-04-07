@@ -17,6 +17,18 @@ const { localsName } = require("ejs");
 const app = express();
 const PORT = process.env.PORT || 9009;
 
+const fs = require('fs');
+const path = require('path');
+
+const uploadsDir = path.resolve('./public/uploads');
+
+
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
+fs.chmodSync(uploadsDir, '755');
+
 mongoose
     .connect(process.env.MONGO_URL || "mongodb://localhost:27017/blogit")
     .then((e) => console.log("mongo connected"));

@@ -75,6 +75,7 @@ router.post("/comment/:blogId", async (req, res) => {
 router.post("/", upload.single('coverImage'), async (req, res) => {
     try {
         const { title, body } = req.body;
+    
         const blog = await Blog.create({
             body,
             title,
