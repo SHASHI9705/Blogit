@@ -18,7 +18,7 @@ const app = express();
 const PORT = process.env.PORT || 9009;
 
 const fs = require('fs');
-const path = require('path');
+
 
 const uploadsDir = path.resolve('./public/uploads');
 
