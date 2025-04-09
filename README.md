@@ -42,10 +42,7 @@ Users can **edit** or **delete** their own blogs and **comment** on others' post
 
 ## ✅ Getting Started
 
-1. Clone the repo:
-   ```bash
-   git clone https://github.com/your-username/awsphere.git
-   cd awsphere
+
 Install dependencies:
 
 bash
