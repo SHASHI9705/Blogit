@@ -1,0 +1,140 @@
+Step 1: Set Up Amazon DocumentDB
+Amazon DocumentDB is a managed MongoDB-compatible database.
+
+Go to Amazon DocumentDB → "Create Cluster"
+
+Choose:
+
+Engine version: MongoDB 4.0/5.0-compatible
+
+Instance type: db.t3.medium (or smaller for cost)
+
+VPC: Use the same VPC as your EC2
+
+Enable backup and monitoring
+
+Create a security group that allows inbound access from your EC2 instances only
+
+Note the cluster endpoint (use this in your app)
+
+Step 2: Store Your App Secrets in AWS SSM
+Go to Systems Manager → Parameter Store
+
+Add:
+
+/awsphere/db_uri → DocumentDB URI
+
+/awsphere/jwt_secret
+
+/awsphere/s3_bucket
+
+Grant EC2 permission to access these securely via IAM role.
+
+Step 3: Set Up S3 for Image Storage
+Create S3 Bucket awsphere-assets
+
+Block public access (keep private)
+
+Enable CORS for image upload
+
+In your app, use:
+
+@aws-sdk/client-s3
+
+multer-s3 or pre-signed URLs
+
+Step 4: Write Your Node.js App to Use AWS SDK + DocumentDB
+Make sure:
+
+Your MongoDB connection string is compatible with DocumentDB
+
+Use tls=true and Amazon CA cert
+
+Fetch secrets from SSM using AWS SDK
+
+Step 5: Create IAM Role for EC2
+Create a new IAM role and attach:
+
+AmazonSSMReadOnlyAccess
+
+AmazonS3FullAccess
+
+CloudWatchAgentServerPolicy
+
+Attach this role to EC2 instance or launch template.
+
+Step 6: Create EC2 Launch Template
+Go to EC2 → Launch Templates → Create:
+
+Use Amazon Linux 2
+
+Add a User Data script:
+
+bash
+Copy
+Edit
+#!/bin/bash
+yum update -y
+yum install -y nodejs git npm
+curl -O https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem
+git clone https://github.com/your/repo.git
+cd repo
+npm install
+npm install pm2 -g
+pm2 start index.js
+Step 7: Create Application Load Balancer (ALB)
+Go to EC2 → Load Balancers
+
+Create an Application Load Balancer
+
+Add listener for:
+
+Port 80 (HTTP)
+
+Port 443 (HTTPS with SSL from ACM)
+
+Register your Auto Scaling Group Target Group
+
+Step 8: Create Auto Scaling Group
+Use your Launch Template
+
+Set:
+
+Min: 2 instances
+
+Max: 5 (auto-scale based on CPU)
+
+Attach to ALB Target Group
+
+Step 9: Configure SSL with ACM
+Go to AWS Certificate Manager
+
+Request a public certificate (e.g., awsphere.io)
+
+Validate via DNS (Route 53)
+
+Attach to ALB listener (443)
+
+Step 10: Configure Domain with Route 53
+Go to Route 53 → Hosted Zones
+
+Create new zone or use existing
+
+Create A/AAAA record pointing to your ALB
+
+Step 11: Enable CloudWatch for Logs
+Use CloudWatch agent on EC2 (pre-installed on Amazon Linux)
+
+Log:
+
+PM2 or stdout/stderr
+
+App-level logs
+
+Create alarms for:
+
+High CPU
+
+5XX errors from ALB
+
+Unhealthy EC2s
