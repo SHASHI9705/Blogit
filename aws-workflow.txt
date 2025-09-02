@@ -136,5 +136,4 @@ Create alarms for:
 High CPU
 
 5XX errors from ALB
-
 Unhealthy EC2s
