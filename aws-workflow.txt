@@ -5,6 +5,7 @@ Go to Amazon DocumentDB → "Create Cluster"
 
 Choose:
 
+
 Engine version: MongoDB 4.0/5.0-compatible
 
 Instance type: db.t3.medium (or smaller for cost)
@@ -19,9 +20,7 @@ Note the cluster endpoint (use this in your app)
 
 Step 2: Store Your App Secrets in AWS SSM
 Go to Systems Manager → Parameter Store
-
 Add:
-
 /awsphere/db_uri → DocumentDB URI
 
 /awsphere/jwt_secret
